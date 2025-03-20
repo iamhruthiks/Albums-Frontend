@@ -3,8 +3,20 @@ import { Typography } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
+import fetchGetData from 'client/client';
 
 // ==============================|| SAMPLE PAGE ||============================== //
+
+const apiUrl = 'https://jsonplaceholder.typicode.com/todos/1';
+fetchGetData(apiUrl)
+  .then((res) => {
+    // Do something with the data
+    console.log('Data:', res.data);
+  })
+  .catch((error) => {
+    // Handle errors from the fetchData function
+    console.error('Error in .then:', error.message);
+  });
 
 const SamplePage = () => (
   <MainCard title="Sample Card">
