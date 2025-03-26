@@ -7,7 +7,7 @@ import fetchGetData from 'client/client';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
-const apiUrl = 'https://jsonplaceholder.typicode.com/todos/1';
+const apiUrl = 'http://localhost:8080/api/v1';
 fetchGetData(apiUrl)
   .then((res) => {
     // Do something with the data
