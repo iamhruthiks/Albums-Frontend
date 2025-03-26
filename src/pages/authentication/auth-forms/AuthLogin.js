@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { Button, TextField, Container } from '@mui/material';
 import { fetchPostData } from 'client/client';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const AuthLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({ email: '', password: '' });
   const [loginError, setLoginError] = useState('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('token');
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, []); // The empty dependency array ensures that the effect runs only once, on mount
 
   // validate email
   const validateEmail = () => {
@@ -41,7 +50,7 @@ const AuthLogin = () => {
         const { token } = response.data;
         setLoginError('');
         localStorage.setItem('token', token);
-        //navigate('/');
+        navigate('/');
       })
       .catch((error) => {
         console.error('Login error:', error);
