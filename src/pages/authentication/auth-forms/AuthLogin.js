@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Button, TextField, Container } from '@mui/material';
+import { fetchPostData } from 'client/client';
+// import { useNavigate } from 'react-router-dom';
 
 const AuthLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({ email: '', password: '' });
+  const [loginError, setLoginError] = useState('');
 
   // validate email
   const validateEmail = () => {
@@ -18,21 +21,33 @@ const AuthLogin = () => {
   };
 
   // handle login
-  const handleLogin = () => {
-    // reseting the previous errors
+  const handleLogin = async () => {
+    // Reset previous errors
     setErrors({ email: '', password: '' });
 
+    // Validation
     if (!validateEmail()) {
       setErrors((prevErrors) => ({ ...prevErrors, email: 'Invalid email format' }));
       return;
     }
 
     if (!validatePassword()) {
-      setErrors((prevErrors) => ({ ...prevErrors, password: 'Password must be atleast 6 characters long' }));
+      setErrors((prevErrors) => ({ ...prevErrors, password: 'Password must be at least 6 characters' }));
       return;
     }
-
-    console.log('Logging in with: ', email, password);
+    // Add your login logic here
+    fetchPostData('/auth/token', { email, password })
+      .then((response) => {
+        const { token } = response.data;
+        setLoginError('');
+        localStorage.setItem('token', token);
+        //navigate('/');
+      })
+      .catch((error) => {
+        console.error('Login error:', error);
+        // Handle other login errors
+        setLoginError('An error occurred during login');
+      });
   };
 
   return (
@@ -61,6 +76,7 @@ const AuthLogin = () => {
       <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
         Login
       </Button>
+      {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
     </Container>
   );
 };
