@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardMedia, Grid, Typography, Tooltip } from '@mui/material';
-import { fetchGetDataWithAuthArrayBuffer, fetchGetDataWithAuth, fetchDeleteDataWithAuth } from 'client/client';
+import { fetchGetDataWithAuthArrayBuffer, fetchGetDataWithAuth, fetchDeleteDataWithAuth, fetchGetBlobDataWithAuth } from 'client/client';
 import { Buffer } from 'buffer';
 import { useLocation } from 'react-router-dom';
 
@@ -14,9 +14,28 @@ const PhotoGrid = () => {
   const handleView = () => {
     console.log('View clicked');
   };
-  const handleDownload = () => {
-    console.log('Download clicked');
+
+  const handleDownload = (download_link) => {
+    console.log(download_link);
+    fetchGetBlobDataWithAuth(download_link)
+      .then((response) => {
+        console.log(response);
+        const disposition = response.headers.get('Content-Disposition');
+        const match = /filename="(.*)"/.exec(disposition);
+        const filename = match ? match[1] : 'downloadedFile';
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch((error) => {
+        // Handle error
+        console.error('Error downloading photo:', error);
+      });
   };
+
   const handleDelete = (photo_id) => {
     const isConfirmed = window.confirm('Are you sure you want to delete the Photo?');
     if (isConfirmed) {
@@ -51,7 +70,8 @@ const PhotoGrid = () => {
             photo_id: photo.id,
             name: photo.name,
             description: photo.description,
-            content: buffer
+            content: buffer,
+            download_link: photo.download_link
           };
           setPhotos((prevPhotos) => ({ ...prevPhotos, [albumPhotoID]: temp }));
         });
@@ -96,11 +116,11 @@ const PhotoGrid = () => {
                   Edit{' '}
                 </a>
                 |
-                <a href="#" onClick={handleDownload}>
+                <a href="#" onClick={() => handleDownload(photos[key]['download_link'])}>
                   {' '}
                   Download{' '}
                 </a>
-                |
+                | |
                 <a href="#" onClick={() => handleDelete(photos[key]['photo_id'])}>
                   {' '}
                   Delete{' '}

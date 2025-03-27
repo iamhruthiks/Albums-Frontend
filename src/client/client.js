@@ -119,6 +119,24 @@ const fetchDeleteDataWithAuth = async (uri) => {
   }
 };
 
+const fetchGetBlobDataWithAuth = async (uri) => {
+  const token = localStorage.getItem('token');
+  const url = `${API_version}${uri}`;
+
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      responseType: 'blob' // Add the responseType option here
+    });
+    return response;
+  } catch (error) {
+    // Handle errors if the request fails
+    console.error('Error fetching data:', error);
+  }
+};
+
 export default fetchGetData;
 export {
   fetchPostData,
@@ -127,5 +145,6 @@ export {
   fetchPostFileUploadWithAuth,
   fetchGetDataWithAuthArrayBuffer,
   fetchPutDataWithAuth,
-  fetchDeleteDataWithAuth
+  fetchDeleteDataWithAuth,
+  fetchGetBlobDataWithAuth
 };
