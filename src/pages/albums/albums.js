@@ -4,6 +4,7 @@ import { Grid, Card, CardContent } from '@mui/material';
 import { useEffect } from 'react';
 import { fetchGetDataWithAuth } from 'client/client';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const brightPopColors = [
   '#FF3E4D',
@@ -97,11 +98,13 @@ const AlbumDynamicGridPage = () => {
     <Grid container spacing={2}>
       {dataArray.map((data, index) => (
         <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
-          <Card className={classes.card} style={{ backgroundColor: getRandomColor() }}>
-            <CardContent>
-              <h1 style={{ fontSize: '2rem', margin: 0, color: 'white' }}>{data.name}</h1>
-            </CardContent>
-          </Card>
+          <Link to={`/album/show?id=${data.id}`}>
+            <Card className={classes.card} style={{ backgroundColor: getRandomColor() }}>
+              <CardContent>
+                <h1 style={{ fontSize: '2rem', margin: 0, color: 'white' }}>{data.name}</h1>
+              </CardContent>
+            </Card>
+          </Link>
         </Grid>
       ))}
     </Grid>
