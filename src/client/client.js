@@ -88,5 +88,31 @@ const fetchGetDataWithAuthArrayBuffer = (uri) => {
   }
 };
 
+const fetchPutDataWithAuth = (uri, payload) => {
+  const token = localStorage.getItem('token');
+  const url = `${API_version}${uri}`;
+  return axios
+    .put(url, payload, {
+      headers: {
+        accept: '*/*',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .catch((error) => {
+      // Handle exceptions/errors
+      console.error('Error fetching data for URL:', url, 'Error', error.message);
+      // You can throw the error again if you want to handle it elsewhere
+      throw error;
+    });
+};
+
 export default fetchGetData;
-export { fetchPostData, fetchPostDataWithAuth, fetchGetDataWithAuth, fetchPostFileUploadWithAuth, fetchGetDataWithAuthArrayBuffer };
+export {
+  fetchPostData,
+  fetchPostDataWithAuth,
+  fetchGetDataWithAuth,
+  fetchPostFileUploadWithAuth,
+  fetchGetDataWithAuthArrayBuffer,
+  fetchPutDataWithAuth
+};

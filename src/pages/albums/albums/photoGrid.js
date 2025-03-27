@@ -9,27 +9,25 @@ const PhotoGrid = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const album_id = queryParams.get('id'); // Extract album ID from URL query parameters
+  const [albumInfo, setAlbumInfo] = useState({}); // State to store album information
 
   const handleView = () => {
-    console.log('View clicked!');
+    console.log('View clicked');
   };
-
   const handleEdit = () => {
-    console.log('Edit clicked!');
+    console.log('Edit clicked');
   };
-
   const handleDownload = () => {
-    console.log('Download clicked!');
+    console.log('Download clicked');
   };
-
   const handleDelete = () => {
-    console.log('Delete clicked!');
+    console.log('Delete clicked');
   };
 
   useEffect(() => {
     // Fetch album data when component mounts or album_id changes
     fetchGetDataWithAuth('/albums/' + album_id).then((res) => {
-      console.log('res', res.data);
+      setAlbumInfo(res.data);
       const photosList = res.data.photos; // Extract list of photos from album data
       // Fetch and update photos one by one as they are downloaded
       photosList.forEach((photo) => {
@@ -53,44 +51,56 @@ const PhotoGrid = () => {
     });
   }, [album_id]); // Dependency array ensures useEffect runs when album_id changes
   return (
-    <Grid container spacing={2}>
-      {/* Render each photo */}
-      {Object.keys(photos).map((key) => (
-        <Grid item key={key} xs={8} sm={4} md={4} lg={2}>
-          <Card>
-            <Tooltip title={photos[key]['description']}>
-              <CardMedia
-                component="img"
-                height="200"
-                image={'data:image/jpeg;base64,' + photos[key]['content']}
-                alt={photos[key]['description']}
-                title={photos[key]['description']}
-              />
-            </Tooltip>
-            <CardContent>
+    <div>
+      <Typography variant="h4" gutterBottom>
+        {albumInfo.name}
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        {albumInfo.description}
+      </Typography>
+      <Grid container spacing={2}>
+        {/* Render each photo */}
+        {Object.keys(photos).map((key) => (
+          <Grid item key={key} xs={8} sm={4} md={4} lg={2}>
+            <Card>
               <Tooltip title={photos[key]['description']}>
-                <Typography variant="subtitle1">{photos[key]['name']}</Typography>
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={'data:image/jpeg;base64,' + photos[key]['content']}
+                  alt={photos[key]['description']}
+                  title={photos[key]['description']}
+                />
               </Tooltip>
-              <a href="#" onClick={handleView}>
-                View
-              </a>
-              |
-              <a href="#" onClick={handleEdit}>
-                Edit
-              </a>
-              |
-              <a href="#" onClick={handleDownload}>
-                Download
-              </a>
-              |
-              <a href="#" onClick={handleDelete}>
-                Delete
-              </a>
-            </CardContent>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
+              <CardContent>
+                <Tooltip title={photos[key]['description']}>
+                  <Typography variant="subtitle1">{photos[key]['name']}</Typography>
+                </Tooltip>
+                <a href="#" onClick={handleView}>
+                  {' '}
+                  View{' '}
+                </a>
+                |
+                <a href="#" onClick={handleEdit}>
+                  {' '}
+                  Edit{' '}
+                </a>
+                |
+                <a href="#" onClick={handleDownload}>
+                  {' '}
+                  Download{' '}
+                </a>
+                |
+                <a href="#" onClick={handleDelete}>
+                  {' '}
+                  Delete{' '}
+                </a>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </div>
   );
 };
 

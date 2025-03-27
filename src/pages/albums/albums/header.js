@@ -17,7 +17,7 @@ const Header = () => {
 
         <Button
           component={Link}
-          to={`/album/show?id=${id}`}
+          to={`/album/edit?id=${id}`}
           color="inherit"
           variant="contained"
           sx={{ mr: 2, backgroundColor: '#799edc', '&:hover': { backgroundColor: '#2f6ad0' } }}
