@@ -7,6 +7,7 @@ import MainLayout from 'layout/MainLayout';
 // render - sample page
 const AlbumsPage = Loadable(lazy(() => import('pages/albums/albums')));
 const AboutPage = Loadable(lazy(() => import('pages/staticPages/about')));
+const AddAlbumPage = Loadable(lazy(() => import('pages/albums/addAlbum')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -17,6 +18,10 @@ const MainRoutes = {
     {
       path: '/',
       element: <AlbumsPage />
+    },
+    {
+      path: '/add-album',
+      element: <AddAlbumPage />
     },
     {
       path: '/about',
