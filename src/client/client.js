@@ -107,6 +107,18 @@ const fetchPutDataWithAuth = (uri, payload) => {
     });
 };
 
+const fetchDeleteDataWithAuth = async (uri) => {
+  const token = localStorage.getItem('token');
+  const url = `${API_version}${uri}`;
+  try {
+    const response = await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } });
+    return response;
+  } catch (error) {
+    // Handle errors if the request fails
+    console.error('Error fetching data:', error);
+  }
+};
+
 export default fetchGetData;
 export {
   fetchPostData,
@@ -114,5 +126,6 @@ export {
   fetchGetDataWithAuth,
   fetchPostFileUploadWithAuth,
   fetchGetDataWithAuthArrayBuffer,
-  fetchPutDataWithAuth
+  fetchPutDataWithAuth,
+  fetchDeleteDataWithAuth
 };

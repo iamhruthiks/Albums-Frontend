@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardMedia, Grid, Typography, Tooltip } from '@mui/material';
-import { fetchGetDataWithAuthArrayBuffer, fetchGetDataWithAuth } from 'client/client';
+import { fetchGetDataWithAuthArrayBuffer, fetchGetDataWithAuth, fetchDeleteDataWithAuth } from 'client/client';
 import { Buffer } from 'buffer';
 import { useLocation } from 'react-router-dom';
 
@@ -17,8 +17,18 @@ const PhotoGrid = () => {
   const handleDownload = () => {
     console.log('Download clicked');
   };
-  const handleDelete = () => {
-    console.log('Delete clicked');
+  const handleDelete = (photo_id) => {
+    const isConfirmed = window.confirm('Are you sure you want to delete the Photo?');
+    if (isConfirmed) {
+      // Perform delete operation
+      console.log('Item deleted!' + photo_id);
+      fetchDeleteDataWithAuth('/albums/' + album_id + '/photos/' + photo_id + '/delete').then((res) => {
+        console.log(res);
+        window.location.reload();
+      });
+    } else {
+      console.log('Delete operation cancelled');
+    }
   };
 
   useEffect(() => {
@@ -91,7 +101,7 @@ const PhotoGrid = () => {
                   Download{' '}
                 </a>
                 |
-                <a href="#" onClick={handleDelete}>
+                <a href="#" onClick={() => handleDelete(photos[key]['photo_id'])}>
                   {' '}
                   Delete{' '}
                 </a>
