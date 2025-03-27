@@ -3,6 +3,29 @@ import { Card, CardContent, CardMedia, Grid, Typography, Tooltip } from '@mui/ma
 import { fetchGetDataWithAuthArrayBuffer, fetchGetDataWithAuth, fetchDeleteDataWithAuth, fetchGetBlobDataWithAuth } from 'client/client';
 import { Buffer } from 'buffer';
 import { useLocation } from 'react-router-dom';
+import { makeStyles } from '@mui/styles';
+import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button';
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  modalMain: {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: '10px',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    maxHeight: '90%',
+    maxWidth: '90%',
+    overflow: 'auto'
+  },
+  closeButton: {
+    marginLeft: 'auto'
+  }
+}));
 
 const PhotoGrid = () => {
   const [photos, setPhotos] = useState({}); // State to store fetched photos
@@ -10,11 +33,28 @@ const PhotoGrid = () => {
   const queryParams = new URLSearchParams(location.search);
   const album_id = queryParams.get('id'); // Extract album ID from URL query parameters
   const [albumInfo, setAlbumInfo] = useState({}); // State to store album information
-
-  const handleView = () => {
-    console.log('View clicked');
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [PhotoContent, setPhotoContent] = useState(null);
+  const [PhotoDesc, setPhotoDesc] = useState(null);
+  const [DownloadLink, setDownloadLink] = useState(null);
+  const handleOpen = () => {
+    setOpen(true);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleView = (download_link, desciption) => {
+    fetchGetDataWithAuthArrayBuffer(download_link).then((response) => {
+      const buffer = Buffer.from(response.data, 'binary').toString('base64');
+      setPhotoContent(buffer);
+    });
+    setDownloadLink(download_link);
+    setPhotoDesc(desciption);
+    handleOpen();
+  };
   const handleDownload = (download_link) => {
     console.log(download_link);
     fetchGetBlobDataWithAuth(download_link)
@@ -35,7 +75,6 @@ const PhotoGrid = () => {
         console.error('Error downloading photo:', error);
       });
   };
-
   const handleDelete = (photo_id) => {
     const isConfirmed = window.confirm('Are you sure you want to delete the Photo?');
     if (isConfirmed) {
@@ -58,18 +97,18 @@ const PhotoGrid = () => {
       // Fetch and update photos one by one as they are downloaded
       photosList.forEach((photo) => {
         // Fetch individual photo data
-        fetchGetDataWithAuthArrayBuffer(photo.download_link).then((response) => {
+        let thumbnail_link = photo.download_link.replace('/download-photo', '/download-thumbnail');
+        fetchGetDataWithAuthArrayBuffer(thumbnail_link).then((response) => {
           // Construct a unique ID for the photo
           const albumPhotoID = 'album_' + album_id + '_photo+' + photo.id;
           // Convert photo data to base64 format
           const buffer = Buffer.from(response.data, 'binary').toString('base64');
           // Update state with the fetched photo
-          console.log(photo.description);
           const temp = {
             album_id: album_id,
             photo_id: photo.id,
             name: photo.name,
-            description: photo.description,
+            description: photo.desciption,
             content: buffer,
             download_link: photo.download_link
           };
@@ -80,6 +119,21 @@ const PhotoGrid = () => {
   }, [album_id]); // Dependency array ensures useEffect runs when album_id changes
   return (
     <div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        className={classes.modal}
+      >
+        <div className={classes.modalMain}>
+          <img src={'data:image/jpeg;base64,' + PhotoContent} alt={PhotoDesc} style={{ width: '100%', height: 'auto' }} />
+          <Button onClick={() => handleDownload(DownloadLink)}> Download Photo </Button>
+          <Button onClick={handleClose} className={classes.closeButton}>
+            Close
+          </Button>
+        </div>
+      </Modal>
       <Typography variant="h4" gutterBottom>
         {albumInfo.name}
       </Typography>
@@ -97,14 +151,13 @@ const PhotoGrid = () => {
                   height="200"
                   image={'data:image/jpeg;base64,' + photos[key]['content']}
                   alt={photos[key]['description']}
-                  title={photos[key]['description']}
                 />
               </Tooltip>
               <CardContent>
                 <Tooltip title={photos[key]['description']}>
                   <Typography variant="subtitle1">{photos[key]['name']}</Typography>
                 </Tooltip>
-                <a href="#" onClick={handleView}>
+                <a href="#" onClick={() => handleView(photos[key]['download_link'], photos[key]['description'])}>
                   {' '}
                   View{' '}
                 </a>
@@ -120,7 +173,7 @@ const PhotoGrid = () => {
                   {' '}
                   Download{' '}
                 </a>
-                | |
+                |
                 <a href="#" onClick={() => handleDelete(photos[key]['photo_id'])}>
                   {' '}
                   Delete{' '}
