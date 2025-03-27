@@ -22,7 +22,7 @@ const Header = () => {
           variant="contained"
           sx={{ mr: 2, backgroundColor: '#799edc', '&:hover': { backgroundColor: '#2f6ad0' } }}
         >
-          Show Photos
+          Edut Album
         </Button>
 
         <Button
@@ -41,7 +41,7 @@ const Header = () => {
           variant="contained"
           sx={{ backgroundColor: '#F44336', '&:hover': { backgroundColor: '#D32F2F' } }}
         >
-          Delete Photos
+          Delete Album
         </Button>
       </Toolbar>
     </AppBar>
