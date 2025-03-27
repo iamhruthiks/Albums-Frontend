@@ -15,6 +15,7 @@ const AuthRegister = () => {
     const isLoggedIn = localStorage.getItem('token');
     if (isLoggedIn) {
       navigate('/');
+      window.location.reload();
     }
   }, []); // The empty dependency array ensures that the effect runs only once, on mount
 
@@ -48,6 +49,7 @@ const AuthRegister = () => {
       .then(() => {
         setLoginError('');
         navigate('/login');
+        window.location.reload();
       })
       .catch((error) => {
         console.error('Login error:', error);

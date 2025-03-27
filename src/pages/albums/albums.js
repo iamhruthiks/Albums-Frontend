@@ -10,6 +10,7 @@ const SamplePage = () => {
     const isLoggedIn = localStorage.getItem('token');
     if (!isLoggedIn) {
       navigate('/login');
+      window.location.reload();
     }
   }, []); // The empty dependency array ensures that the effect runs only once, on mount
   return (
