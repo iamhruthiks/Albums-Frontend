@@ -14,9 +14,6 @@ const PhotoGrid = () => {
   const handleView = () => {
     console.log('View clicked');
   };
-  const handleEdit = () => {
-    console.log('Edit clicked');
-  };
   const handleDownload = () => {
     console.log('Download clicked');
   };
@@ -38,11 +35,12 @@ const PhotoGrid = () => {
           // Convert photo data to base64 format
           const buffer = Buffer.from(response.data, 'binary').toString('base64');
           // Update state with the fetched photo
+          console.log(photo.description);
           const temp = {
             album_id: album_id,
             photo_id: photo.id,
             name: photo.name,
-            description: photo.desciption,
+            description: photo.description,
             content: buffer
           };
           setPhotos((prevPhotos) => ({ ...prevPhotos, [albumPhotoID]: temp }));
@@ -81,7 +79,9 @@ const PhotoGrid = () => {
                   View{' '}
                 </a>
                 |
-                <a href="#" onClick={handleEdit}>
+                <a
+                  href={`/photo/edit?album_id=${album_id}&photo_id=${photos[key]['photo_id']}&photo_name=${photos[key]['name']}&photo_desc=${photos[key]['description']}`}
+                >
                   {' '}
                   Edit{' '}
                 </a>
