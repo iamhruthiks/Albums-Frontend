@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import Header from './albums/header';
-import { Box, Button, CircularProgress, Container, Grid, Paper, Typography, IconButton } from '@mui/material';
+import { Box, Button, Container, Grid, Paper, Typography, IconButton, CircularProgress } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { AddCircleOutline, Close } from '@mui/icons-material';
 import { useDropzone } from 'react-dropzone';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { fetchPostFileUploadWithAuth } from 'client/client';
 
 const useStyles = makeStyles((theme) => ({
   dropzoneContainer: {
@@ -29,11 +29,11 @@ const useStyles = makeStyles((theme) => ({
 const FileUploadPage = () => {
   const classes = useStyles();
   const [files, setFiles] = useState([]);
-  const navigate = useNavigate();
-  const [processing, setProcessing] = useState(false);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get('id');
+  const navigate = useNavigate();
+  const [processing, SetProcessing] = useState(false);
 
   const onDrop = (acceptedFiles) => {
     setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
@@ -47,27 +47,20 @@ const FileUploadPage = () => {
 
   const handleUpload = async () => {
     try {
-      setProcessing(true);
+      SetProcessing(true);
       const formData = new FormData();
       files.forEach((file) => {
         formData.append('files', file);
       });
 
-      const token = localStorage.getItem('token');
-      const response = await axios.post('/api/v1/albums/' + id + '/upload-photos', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`
-        }
+      fetchPostFileUploadWithAuth('/albums/' + id + '/upload-photos', formData).then((res) => {
+        console.log(res.data);
+        navigate('/album/show?id=' + id);
       });
 
-      console.log('Upload successful:', response.data);
       setFiles([]);
-      navigate('/album/show?id=' + id);
     } catch (error) {
       console.error('Error uploading files:', error.message);
-    } finally {
-      setProcessing(false); // Reset loading state regardless of success or failure
     }
   };
 
@@ -111,7 +104,7 @@ const FileUploadPage = () => {
                 </Box>
               ) : (
                 <Button variant="contained" color="primary" onClick={handleUpload} disabled={files.length === 0}>
-                  Upload Photos
+                  Upload Photo
                 </Button>
               )}
             </Grid>
