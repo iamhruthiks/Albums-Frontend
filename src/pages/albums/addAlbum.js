@@ -67,6 +67,7 @@ const AddAlbumForm = () => {
           console.error('Login error:', error);
         });
       console.log('Form submitted:', payload);
+      navigate('/');
     }
   };
 
