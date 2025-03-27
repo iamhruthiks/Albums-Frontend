@@ -71,5 +71,22 @@ const fetchPostFileUploadWithAuth = async (uri, formData) => {
   }
 };
 
+const fetchGetDataWithAuthArrayBuffer = (uri) => {
+  const token = localStorage.getItem('token');
+  const url = `${API_version}${uri}`;
+  try {
+    const response = axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      responseType: 'arraybuffer'
+    });
+    return response;
+  } catch (error) {
+    // Handle errors if the request fails
+    console.error('Error fetching data:', error);
+  }
+};
+
 export default fetchGetData;
-export { fetchPostData, fetchPostDataWithAuth, fetchGetDataWithAuth, fetchPostFileUploadWithAuth };
+export { fetchPostData, fetchPostDataWithAuth, fetchGetDataWithAuth, fetchPostFileUploadWithAuth, fetchGetDataWithAuthArrayBuffer };
