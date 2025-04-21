@@ -55,26 +55,33 @@ const PhotoGrid = () => {
     setPhotoDesc(desciption);
     handleOpen();
   };
+
   const handleDownload = (download_link) => {
     console.log(download_link);
     fetchGetBlobDataWithAuth(download_link)
       .then((response) => {
         console.log(response);
-        const disposition = response.headers.get('Content-Disposition');
-        const match = /filename="(.*)"/.exec(disposition);
-        const filename = match ? match[1] : 'downloadedFile';
+
+        const disposition = response.headers['content-disposition'];
+        const match = /filename="?(.*?)"?$/.exec(disposition);
+        const filename = match ? match[1] : 'downloadedFile.jpg';
+
         const url = window.URL.createObjectURL(new Blob([response.data]));
+
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', filename);
         document.body.appendChild(link);
         link.click();
+
+        link.remove();
+        window.URL.revokeObjectURL(url);
       })
       .catch((error) => {
-        // Handle error
         console.error('Error downloading photo:', error);
       });
   };
+
   const handleDelete = (photo_id) => {
     const isConfirmed = window.confirm('Are you sure you want to delete the Photo?');
     if (isConfirmed) {
