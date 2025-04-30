@@ -1,131 +1,130 @@
-# Mantis Free React Material UI Dashboard Template [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Download%20Mantis%20React%20-%20The%20professional%20Material%20designed%20React%20Admin%20Dashboard%20Template%20&url=https://mantisdashboard.io&via=codedthemes&hashtags=reactjs,webdev,developers,javascript)
+# 📁 Project Title: Albums-Frontend
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Price](https://img.shields.io/badge/price-FREE-0098f7.svg)](https://github.com/codedthemes/mantis-free-react-admin-template/blob/main/LICENSE)
-[![GitHub package version](https://img.shields.io/github/package-json/v/codedthemes/mantis-free-react-admin-template)](https://github.com/codedthemes/mantis-free-react-admin-template/)
+## 💡 Overview
 
-Mantis is a free and open source React redux dashboard template made using the Material UI React component library with aim of flexibility and better customizability.
+**Albums-Frontend**  is a dynamic and user-friendly frontend interface built with React.js for managing photo albums. It empowers users to seamlessly interact with their personal photo collections - allowing them to create albums, add photos, and perform full CRUD operations with ease. The app is designed with a clean and responsive UI to deliver a smooth experience across all devices.
 
-### Name Derived From Nature
+---
 
-Mantis Logo is inspired from the insect name - 'Mantises' as they have triangular heads with flexible Necks. Also, the name is derived from two popular UI frameworks, Material UI and Ant Design (M-Ant-is).
+## ✨ Features
 
-Mantis has Ant Design principal on top of the MAterial UI React component library.
+- **User Authentication**: Secure login and registration integrated with the backend.
+- **Album Management**: Users can create, view, edit, and delete albums.
+- **Photo CRUD Operations**: Add, update, delete, and view photos inside each album.
+- **Download Functionality**: Photos can be downloaded with a single click.
+- **Responsive Design**: Optimized for desktops, tablets, and mobile screens using Bootstrap.
+- **Clean UI & UX**: Focused on usability and intuitive navigation.
+- **Seamless API Integration**: Communicates with a Spring Boot backend via REST APIs.
 
-:star: :star: :star: Support us by giving star (Top right of this page) if you like the theme :star: :star: :star:
+---
 
-![mantis-free-react-dashboard-template.jpg](https://mantisdashboard.io/adv-banner-images/og-social-v1.1.0.png)
+## 🛠️ Tech Stack Used
 
-The [Pro version](https://mantisdashboard.io) of Mantis react template includes features such as TypeScript, apps, authentication methods (i.e. JWT, Auth0, Firebase), advance components, form plugins, layouts, widgets, and more.
+- **Framework**: React.js  
+- **Styling**: Bootstrap, CSS
+- **Scripting**: JavaScript, HTML5  
+- **Others**: Axios (for API calls), React Router
 
-| [Mantis Free](https://mantisdashboard.io/free) | [Mantis Pro](https://mantisdashboard.io)                                         |
-| ---------------------------------------------- | :------------------------------------------------------------------------------- |
-| **7** Demo pages                               | **85+** Demo pages                                                               |
-| -                                              | ✓ Multi-language                                                                 |
-| -                                              | ✓ Dark/Light Mode 🌓                                                             |
-| -                                              | ✓ TypeScript version                                                             |
-| -                                              | ✓ Design files (Figma)                                                           |
-| -                                              | ✓ Multiple color options                                                         |
-| -                                              | ✓ RTL                                                                            |
-| -                                              | ✓ JWT, Firebase, Auth0, AWS authentication                                       |
-| -                                              | ✓ [More components](https://mantisdashboard.io/components-overview/autocomplete) |
-| ✓ MIT License                                  | ✓ [Pro License](https://mui.com/store/license/)                                  |
+---
 
-## Why Mantis?
+## 🚀 How to Run the Frontend Application
 
-Mantis offers everything needed to build an advanced dashboard application. In the initial release, we included following high-end features,
+### Prerequisites
 
-- Support React18.
-- Professional user interface.
-- Material UI React components.
-- Fully responsive, all modern browser supported.
-- Easy to use code structure
-- Flexible & high-Performance code
-- Simple documentation
+- Node.js (v16 or higher recommended)
+- npm
 
-## Free Mantis React version
+### **Open your terminal or command prompt.**
 
-#### Preview
+### Clone the Repository
 
-- [Demo](https://mantisdashboard.io/free)
-
-#### Download
-
-- [Download from GitHub](https://github.com/codedthemes/mantis-free-react-admin-template)
-
-## Mantis Pro version
-
-#### Preview
-
-- [Demo](https://mantisdashboard.io)
-
-#### Purchase
-
-- [Buy now](https://mui.com/store/items/mantis-react-admin-dashboard-template/)
-
-## Table of contents
-
-- [Getting started](#getting-started)
-- [Documentation](#documentation)
-- [Technology stack](#technology-stack)
-- [Author](#author)
-- [Issues?](#issues)
-- [License](#license)
-- [More products](#more-free-react-material-admin-templates)
-- [Follow us](#follow-us)
-
-## Getting started
-
-Clone from GitHub
-
-```
-git clone https://github.com/codedthemes/mantis-free-react-admin-template.git
-yarn
-yarn start
+```bash
+git clone https://github.com/iamhruthiks/Albums-Frontend.git
 ```
 
-## Documentation
+### Navigate inside Project Directory
 
-[Mantis documentation](https://codedthemes.gitbook.io/mantis/) helps you out in all aspects from Installation to deployment.
+```bash
+cd Albums-Frontend
+```
 
-## Technology stack
+### Configure Secret Properties
+Create a .env file in the root of projcet directory and add:
 
-- [Material UI V5](https://mui.com/core/)
-- Built with React Hooks API.
-- Redux & React context API for state management.
-- Redux toolkit.
-- React Router for navigation routing.
-- Support for react-script.
-- Code splitting.
-- CSS-in-JS.
+```bash
+REACT_APP_VERSION = v1
+GENERATE_SOURCEMAP = false
+REACT_APP_BASE_URL = http://localhost:8080
+```
 
-## Author
+### Install Dependencies
 
-Mantis is managed by team [CodedThemes](https://codedthemes.com).
+```bash
+npm install
+```
 
-## Issues
+### Start the Frontend Application
 
-Please generate a [GitHub issue](https://github.com/codedthemes/mantis-free-react-admin-template/issues) if you found a bug in any version. We are try our best to resolve the issue.
+```bash
+npm start
+```
 
-## License
+### Access the Application
 
-- Licensed under [MIT](https://github.com/codedthemes/datta-able-bootstrap-dashboard/blob/master/LICENSE)
+- App: `http://localhost:3000`
 
-## Checkout free React Material admin dashboard templates
+_💡 Note: To interact with the app, make sure your [backend](https://github.com/iamhruthiks/Albums-API-Backend) is running._
 
-- [Free Materially](https://codedthemes.com/item/materially-free-reactjs-admin-template/)
-- [Free Berry](https://mui.com/store/items/berry-react-material-admin-free/)
+---
 
-## Checkout premium React Material admin dashboard templates
+## 📁 Project Structure
 
-- [Materially](https://codedthemes.com/item/materially-reactjs-admin-dashboard/)
-- [Berry](https://mui.com/store/items/berry-react-material-admin/)
 
-## Follow us
+- `/components`: Reusable UI components like Navbar, AlbumCard, PhotoGrid, etc.
 
-- Website [https://mantisdashboard.io](https://mantisdashboard.io)
-- Blog [https://blog.mantisdashboard.io](https://blog.mantisdashboard.io)
-- CodedThemes [https://codedthemes.com](https://codedthemes.com)
-- Dribbble [https://dribbble.com/codedthemes](https://dribbble.com/codedthemes)
-- Facebook [https://www.facebook.com/codedthemes](https://www.facebook.com/codedthemes)
-- Twitter [https://twitter.com/codedthemes](https://twitter.com/codedthemes)
+- `/pages`: Main pages including Login, Register, Dashboard, AlbumDetails
+
+- `/client`: Axios API methods to communicate with the backend
+
+- `/assets`: Static files like icons or images
+
+- `/App.js`: Main application router
+
+- `/index.js`: Entry point of the app
+
+---
+
+## 🌐 Deployment
+
+- 🌱 The frontend application is deployed on **Vercel**.  
+- 🔴 **Live App**: https://albums-frontend.vercel.app
+- 👤 **Guest Login for Demo**:  
+  You can use the following credentials to explore the app without registering:  
+  - **Email**: `user@user.com`  
+  - **Password**: `password`  
+  _(Note: This is a demo account for exploration purposes only.)_
+
+---
+
+## 📜 Acknowledgements
+
+_This project was developed as one of my the **capstone projects** for the course **"FULL STACK JAVA DEV: JAVA + JSP + SPRING + BOOT + JS + REACT"**._
+
+_I extend my heartfelt thanks to **Chand Sheikh** and the **StudyEasy Organization** for creating such a comprehensive and engaging learning experience. The course's practical, project-driven approach and clear explanations were instrumental in equipping me with the skills and confidence to bring this application to life. It has been a pivotal step in my journey to becoming a full-stack Java developer._
+
+---
+
+## 📷 Screenshots
+<img width="959" alt="login" src="https://github.com/user-attachments/assets/294fce6e-d805-44ed-9d27-3991cc016a28"><hr>
+<img width="959" alt="sign up" src="https://github.com/user-attachments/assets/993cf560-e344-4982-a91f-c5d753032cb0"><hr>
+<img width="959" alt="dashboard(empty)" src="https://github.com/user-attachments/assets/773132c8-e7e9-40cd-be85-c0bf7a5d5626"><hr>
+<img width="959" alt="add albums" src="https://github.com/user-attachments/assets/b5bc682c-7a12-40b1-bb37-dae550b1c8d7"><hr>
+<img width="959" alt="dashboard" src="https://github.com/user-attachments/assets/472feccb-378e-4654-8e23-11aa880de8b5"><hr>
+<img width="959" alt="inside album (empty)" src="https://github.com/user-attachments/assets/adc6f78f-7cf5-4a2c-8e2f-c27b26b5cacd"><hr>
+<img width="959" alt="upload photo" src="https://github.com/user-attachments/assets/b46b63c6-fcfa-42b2-a962-5acb9c4c507b"><hr>
+<img width="959" alt="inside album" src="https://github.com/user-attachments/assets/7add80d1-38e9-4858-bbd3-cd7ac280a8c0"><hr>
+<img width="959" alt="view photo" src="https://github.com/user-attachments/assets/872953ce-3e80-4509-b6c9-b5feb2c82e04"><hr>
+<img width="959" alt="download photo" src="https://github.com/user-attachments/assets/a0346a07-0876-4a3c-8ab9-4ebc7e9de806"><hr>
+<img width="959" alt="inside album" src="https://github.com/user-attachments/assets/a179bcac-7d43-477f-b7dd-9c9a8dd73409"><hr>
+<img width="959" alt="responsive design 1" src="https://github.com/user-attachments/assets/d4e9e93a-dde0-4484-ace4-fc1cffceb25d"><hr>
+<img width="959" alt="responsive design 2" src="https://github.com/user-attachments/assets/03686ad7-a873-4358-a1ae-25f0fe2bcf41"><hr>
